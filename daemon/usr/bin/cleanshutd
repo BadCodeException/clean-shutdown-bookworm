@@ -51,22 +51,6 @@ while true; do
         fi
         sleep $polling_rate
     done
-
-    while [ "$daemon" = "off" ]; do
-        if [ ! -f /var/run/nologin ]; then
-            raspi-gpio set $trigger_pin ip pu
-            daemon="on"
-            break
-        fi
-        if [ "$led_pin" != "off" ]; then
-            raspi-gpio set $led_pin op dl
-            sleep 0.1
-            raspi-gpio set $led_pin op dh
-            sleep $blink_time
-        else
-            sleep $polling_rate
-        fi
-    done
 done
 
 exit 0
