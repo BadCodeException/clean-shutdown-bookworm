@@ -3,11 +3,15 @@
 # default values
 daemon_active=1
 trigger_pin=17
-led_pin=off
-poweroff_pin=off
+led_pin=17
+poweroff_pin=4
 hold_time=1
 shutdown_delay=0
 polling_rate=1
+
+if [ -f /etc/cleanshutd.conf ]; then
+    source /etc/cleanshutd.conf
+fi
 
 pinctrl set $trigger_pin ip pu
 echo "monitoring BCM $trigger_pin"
