@@ -192,22 +192,6 @@ for i in "$@"; do
     esac
 done
 
-echo -e "Installing dependencies..."
-
-if apt_pkg_req "raspi-gpio" &> /dev/null; then
-    if ! apt_pkg_install "raspi-gpio" &> /dev/null; then
-        DEBDIR=`mktemp -d /tmp/pimoroni.XXXXXX` && cd $DEBDIR
-        wget $RPIPOOL/main/r/raspi-gpio/$RPIGPIO1 &> /dev/null
-        sudo dpkg -i $DEBDIR/$RPIGPIO1
-    fi
-fi
-
-for pkgdep in ${pkgdeplist[@]}; do
-    if apt_pkg_req "$pkgdep"; then
-        sysupdate && apt_pkg_install "$pkgdep"
-    fi
-done
-
 echo -e "\nInstalling daemon..."
 
 sudo cp ./daemon/etc/init.d/cleanshutd /etc/init.d/
